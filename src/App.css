@@ -1,0 +1,119 @@
+/* CSS styles for the game */
+.App {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.loading {
+  font-size: 24px;
+  margin-top: 100px;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.game-header {
+  margin-bottom: 10px;
+}
+
+.game-header h1 {
+  color: #333;
+  margin: 0;
+}
+
+.game-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.player-ui-container {
+  display: flex;
+  justify-content: space-between;
+  width: 800px;
+}
+
+.player-ui {
+  width: 45%;
+  padding: 10px;
+  border: 2px solid;
+  border-radius: 5px;
+}
+
+.health-bar-container {
+  width: 100%;
+  height: 20px;
+  background-color: #ddd;
+  border-radius: 5px;
+  margin: 5px 0;
+}
+
+.health-bar {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.3s ease;
+}
+
+.health-text, .ammo-text, .score-text {
+  margin: 5px 0;
+  font-weight: bold;
+}
+
+.scoreboard {
+  width: 800px;
+  margin-top: 20px;
+  border: 2px solid #333;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.scoreboard h2 {
+  margin-top: 0;
+}
+
+.scoreboard table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.scoreboard th, .scoreboard td {
+  padding: 8px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.scoreboard th {
+  background-color: #f2f2f2;
+}
+
+.game-footer {
+  margin-top: 20px;
+}
+
+.controls-info {
+  display: flex;
+  justify-content: space-around;
+  background-color: #f5f5f5;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.player-controls {
+  text-align: left;
+}
+
+.player-controls h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.player-controls p {
+  margin: 5px 0;
+}
