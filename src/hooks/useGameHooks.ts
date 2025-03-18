@@ -62,28 +62,73 @@ export const useKeyboardControls = (players: Player[]) => {
     setPlayerControls(initialControls);
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.repeat) return;
-
+      // Remove the e.repeat check to allow continuous movement when keys are held down
+      // Prevent default behavior for game control keys to avoid page scrolling
       const newControls = { ...playerControls };
 
       // Player 1 controls (WASD + Space)
-      if (e.key === 'w') newControls[players[0].id].up = true;
-      if (e.key === 's') newControls[players[0].id].down = true;
-      if (e.key === 'a') newControls[players[0].id].left = true;
-      if (e.key === 'd') newControls[players[0].id].right = true;
-      if (e.key === ' ') newControls[players[0].id].shoot = true;
-      if (e.key === 'q') newControls[players[0].id].turretLeft = true;
-      if (e.key === 'e') newControls[players[0].id].turretRight = true;
+      if (e.key === 'w') {
+        newControls[players[0].id].up = true;
+        e.preventDefault();
+      }
+      if (e.key === 's') {
+        newControls[players[0].id].down = true;
+        e.preventDefault();
+      }
+      if (e.key === 'a') {
+        newControls[players[0].id].left = true;
+        e.preventDefault();
+      }
+      if (e.key === 'd') {
+        newControls[players[0].id].right = true;
+        e.preventDefault();
+      }
+      if (e.key === ' ') {
+        newControls[players[0].id].shoot = true;
+        e.preventDefault(); // Prevent spacebar from scrolling the page
+      }
+      if (e.key === 'q') {
+        newControls[players[0].id].turretLeft = true;
+        e.preventDefault();
+      }
+      if (e.key === 'e') {
+        newControls[players[0].id].turretRight = true;
+        e.preventDefault();
+      }
 
       // Player 2 controls (Arrow keys + Right Ctrl/Shift)
-      if (e.key === 'ArrowUp') newControls[players[1].id].up = true;
-      if (e.key === 'ArrowDown') newControls[players[1].id].down = true;
-      if (e.key === 'ArrowLeft') newControls[players[1].id].left = true;
-      if (e.key === 'ArrowRight') newControls[players[1].id].right = true;
-      if (e.key === 'Control' && e.location === 2) newControls[players[1].id].shoot = true;
-      if (e.key === 'Shift' && e.location === 2) newControls[players[1].id].shoot = true;
-      if (e.key === ',') newControls[players[1].id].turretLeft = true;
-      if (e.key === '.') newControls[players[1].id].turretRight = true;
+      if (e.key === 'ArrowUp') {
+        newControls[players[1].id].up = true;
+        e.preventDefault();
+      }
+      if (e.key === 'ArrowDown') {
+        newControls[players[1].id].down = true;
+        e.preventDefault();
+      }
+      if (e.key === 'ArrowLeft') {
+        newControls[players[1].id].left = true;
+        e.preventDefault();
+      }
+      if (e.key === 'ArrowRight') {
+        newControls[players[1].id].right = true;
+        e.preventDefault();
+      }
+      if (e.key === 'Control' && e.location === 2) {
+        newControls[players[1].id].shoot = true;
+        e.preventDefault();
+      }
+      if (e.key === 'Shift' && e.location === 2) {
+        newControls[players[1].id].shoot = true;
+        e.preventDefault();
+      }
+      if (e.key === ',') {
+        newControls[players[1].id].turretLeft = true;
+        e.preventDefault();
+      }
+      if (e.key === '.') {
+        newControls[players[1].id].turretRight = true;
+        e.preventDefault();
+      }
 
       setPlayerControls(newControls);
     };

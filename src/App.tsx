@@ -59,13 +59,13 @@ const App: React.FC = () => {
       { position: { x: 375, y: 275 }, width: 50, height: 50 },
     ];
 
-    // Create tanks
+    // Create tanks - adjust initial angles to account for the 90-degree rotation fix
     const tanks: Record<string, Tank> = {
       '1': {
         id: '1',
         position: { x: 200, y: 300 },
-        chassisAngle: 0,
-        turretAngle: 0,
+        chassisAngle: Math.PI/2, // Start facing right (adjusted for 90-degree fix)
+        turretAngle: Math.PI/2,  // Start facing right (adjusted for 90-degree fix)
         health: TANK_MAX_HEALTH,
         maxHealth: TANK_MAX_HEALTH,
         ammo: TANK_MAX_AMMO,
@@ -86,8 +86,8 @@ const App: React.FC = () => {
       '2': {
         id: '2',
         position: { x: 600, y: 300 },
-        chassisAngle: Math.PI,
-        turretAngle: Math.PI,
+        chassisAngle: 3*Math.PI/2, // Start facing left (adjusted for 90-degree fix)
+        turretAngle: 3*Math.PI/2,  // Start facing left (adjusted for 90-degree fix)
         health: TANK_MAX_HEALTH,
         maxHealth: TANK_MAX_HEALTH,
         ammo: TANK_MAX_AMMO,
@@ -133,15 +133,15 @@ const App: React.FC = () => {
           tank.health = tank.maxHealth;
           tank.ammo = tank.maxAmmo;
           
-          // Respawn position based on player
+          // Respawn position based on player - adjust angles for 90-degree fix
           if (tank.id === '1') {
             tank.position = { x: 200, y: 300 };
-            tank.chassisAngle = 0;
-            tank.turretAngle = 0;
+            tank.chassisAngle = Math.PI/2; // Start facing right
+            tank.turretAngle = Math.PI/2;  // Start facing right
           } else {
             tank.position = { x: 600, y: 300 };
-            tank.chassisAngle = Math.PI;
-            tank.turretAngle = Math.PI;
+            tank.chassisAngle = 3*Math.PI/2; // Start facing left
+            tank.turretAngle = 3*Math.PI/2;  // Start facing left
           }
         }
         return;
@@ -302,6 +302,21 @@ const App: React.FC = () => {
       startGameLoop();
     }
   }, [assetsLoaded, isRunning, startGameLoop]);
+
+  // Prevent default behavior for game control keys
+  useEffect(() => {
+    const preventDefaultForGameKeys = (e: KeyboardEvent) => {
+      if (['w', 'a', 's', 'd', ' ', 'q', 'e', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ',', '.'].includes(e.key)) {
+        e.preventDefault();
+      }
+    };
+
+    window.addEventListener('keydown', preventDefaultForGameKeys);
+    
+    return () => {
+      window.removeEventListener('keydown', preventDefaultForGameKeys);
+    };
+  }, []);
 
   return (
     <div className="App">

@@ -51,9 +51,9 @@ const GameCanvas: React.FC<GameCanvasProps> = ({ gameState, assets }) => {
       // Save context state
       ctx.save();
 
-      // Draw tank chassis
+      // Draw tank chassis - rotate 90 degrees counterclockwise to fix orientation
       ctx.translate(tank.position.x + tank.width / 2, tank.position.y + tank.height / 2);
-      ctx.rotate(tank.chassisAngle);
+      ctx.rotate(tank.chassisAngle - Math.PI/2); // Subtract 90 degrees to fix rotation
       ctx.translate(-(tank.width / 2), -(tank.height / 2));
       
       // Apply tank color tint
@@ -64,16 +64,22 @@ const GameCanvas: React.FC<GameCanvasProps> = ({ gameState, assets }) => {
       
       // Draw tank turret
       ctx.save();
-      ctx.translate(tank.position.x + tank.width / 2, tank.position.y + tank.height / 2);
-      ctx.rotate(tank.turretAngle);
       
-      // Calculate turret position (centered on tank)
-      const turretWidth = tank.width * 0.6;
-      const turretHeight = tank.height * 0.6;
+      // Position turret at tank center
+      ctx.translate(tank.position.x + tank.width / 2, tank.position.y + tank.height / 2);
+      ctx.rotate(tank.turretAngle - Math.PI/2); // Subtract 90 degrees to fix rotation
+      
+      // Calculate turret dimensions - use full height for proper aspect ratio
+      const turretHeight = tank.height * 0.8; // Slightly smaller than tank
+      const turretWidth = (assets.turret.width / assets.turret.height) * turretHeight; // Maintain aspect ratio
+      
+      // Position turret with rotation point toward back (1/3 from bottom)
+      const offsetY = turretHeight / 6; // Move turret forward on tank
+      
       ctx.drawImage(
         assets.turret,
         -turretWidth / 2,
-        -turretHeight / 2,
+        -turretHeight * 2/3 + offsetY, // Set rotation point at 2/3 from top
         turretWidth,
         turretHeight
       );
